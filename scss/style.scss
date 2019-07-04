@@ -1,0 +1,315 @@
+// Fonts Import
+@font-face {
+    font-family: "Circe";
+    src: url("../fonts/CirceRegular.otf");
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Circe";
+    src: url("../fonts/CirceLight.otf");
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Circe";
+    src: url("../fonts/CirceExtraLight.otf");
+    font-weight: 200;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Circe";
+    src: url("../fonts/CirceBold.otf");
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Circe";
+    src: url("../fonts/CirceExtraBold.otf");
+    font-weight: 800;
+    font-style: normal;
+}
+
+// Animations
+
+// Normalize
+*,
+*::after,
+*::before {
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-family: "Circe", sans-serif;
+    font-size: 62.5%;
+}
+
+body {
+    box-sizing: border-box;
+    font-size: 1.6rem;
+    // line-height: 1.6;
+}
+
+a:link,
+a:visited {
+    text-decoration: none;
+}
+
+// Components
+.btn {
+    border: none;
+    background: transparent;
+    padding: 0.5rem 2rem;
+    transition: all 0.2s;
+
+    &:hover {
+        cursor: pointer;
+    }
+
+    &__rounded {
+        border-radius: inherit;
+    }
+}
+
+input {
+    padding: 0.5rem 1rem;
+    border: none;
+    background: transparent;
+
+    &:focus {
+        outline: none;
+        border-color: rgba($color: #000, $alpha: 1);
+        transition: all 0.2s;
+    }
+}
+
+// Home Page
+.wrapper {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+
+.search-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40%;
+    // overflow: hidden;
+}
+
+.search-bar {
+    position: relative;
+    display: flex;
+    padding: 0.5rem 0.5rem 0.5rem 1rem;
+    background: rgba($color: #e4e4e4, $alpha: 0.4);
+    border-radius: 7rem;
+    max-width: 80rem;
+    width: 40rem;
+    min-width: 20rem;
+    height: 5rem;
+    transition: background 0.4s;
+    // border: 0.05rem solid #fff;
+
+    .btn {
+        background: #fff;
+        font-size: 1.6rem;
+
+        &:hover {
+            background: rgba($color: #000000, $alpha: 1);
+            color: #fff;
+        }
+    }
+}
+
+.in-focus {
+    background: rgba($color: #e4e4e4, $alpha: 0.8);
+}
+
+.search-icon {
+    width: 2rem;
+    margin-left: 1rem;
+}
+
+.search-inp {
+    // max-width: 40rem;
+    // min-width: 10rem;
+    width: 100%;
+    height: 100%;
+    font-size: 2rem;
+    // color: #fff;
+}
+
+.search-result {
+    margin-top: 1rem;
+    // background: #000;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    padding: 1rem 0;
+    border-radius: 0.5rem;
+
+    &-card {
+        // background-color: #fff;
+        display: grid;
+        grid-template-columns: 1fr 3fr;
+        transition: all 0.2s;
+
+        &:hover {
+            background-color: rgb(213, 242, 248);
+            cursor: pointer;
+        }
+
+        &__poster {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 10rem;
+            padding: 1rem;
+            // background-color: #ccc;
+            // overflow: hidden;
+
+            img {
+                max-height: 100%;
+            }
+        }
+
+        &__content {
+            padding: 1rem 1rem 1rem 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        &__year {
+            font-size: 1.2rem;
+            color: rgb(138, 138, 138);
+        }
+
+        &__rating {
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+
+            &-icon {
+                width: 1.2rem;
+                margin-right: 1rem;
+            }
+
+            &-number {
+                line-height: 100%;
+            }
+        }
+    }
+}
+
+// Movie Detail Page
+.detail-page {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow-x: hidden;
+    background-color: #fff;
+}
+
+.backdrop-container {
+    width: 100%;
+    height: 100vh;
+    background: url("../img/backdrop.jpg") no-repeat center;
+    background-size: cover;
+}
+
+.backdrop-overlay {
+    padding: 2rem;
+    color: #fff;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 1) 0%,
+        rgba(255, 255, 255, 0) 80%
+    );
+}
+
+.movie {
+    &-name {
+        font-size: 8rem;
+        font-weight: 800;
+    }
+
+    &-details {
+        margin: 0 auto;
+        max-width: 110rem;
+        padding: 2rem;
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 2rem;
+    }
+
+    &-metadata {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+    }
+
+    &-poster {
+        min-height: 27.8rem;
+        width: auto;
+        // background-color: #000;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    &-detail {
+        text-align: right;
+        margin-top: 1rem;
+
+        .heading {
+            text-transform: uppercase;
+            font-weight: 800;
+            // font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .list {
+            li {
+                list-style: none;
+                line-height: 100%;
+            }
+        }
+    }
+
+    &-overview {
+        line-height: 1.6;
+    }
+
+    &-tagline {
+        position: relative;
+        display: inline-block;
+        margin-bottom: 1rem;
+
+        &::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: 0;
+            left: 0;
+            height: 50%;
+            background-color: rgba(0, 0, 0, 0.122);
+        }
+    }
+}
