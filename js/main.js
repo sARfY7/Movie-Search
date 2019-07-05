@@ -12,10 +12,12 @@ $(function() {
 
     search_inp = $(".search-inp");
     search_bar = $(".search-bar");
-    search_result = $(".search-result");
+    search_result = $(".search-result .results");
 
     backdrop_container = $(".backdrop-container");
     backdrop_overlay = $(".backdrop-overlay");
+    backdrop_movie = $(".backdrop-movie");
+    backdrop_movie_poster = $(".backdrop-movie__poster");
     backdrop_movie_genre = $(".backdrop-movie__genre ul");
     backdrop_movie_director = $(".backdrop-movie__director ul");
     backdrop_movie_cast = $(".backdrop-movie__cast ul");
@@ -34,6 +36,7 @@ $(function() {
     go_back.on("click", function() {
         search_inp.focus();
         backdrop_container.css("background-image", "url()");
+        backdrop_movie_poster.html("");
         backdrop_movie_genre.html("");
         backdrop_movie_cast.html("");
         backdrop_movie_director.html("");
@@ -67,7 +70,7 @@ function getMovies(element) {
         return;
     }
 
-    search_result.html("");
+    showSearchSpinner();
     let inpValBeforeSend;
     const settings = {
         async: true,
@@ -84,6 +87,8 @@ function getMovies(element) {
     $.ajax(settings).done(function(response) {
         const currentInpVal = element.value;
         if (currentInpVal == inpValBeforeSend) {
+            hideSearchSpinner();
+            search_result.html("");
             const movies = response.results.slice(0, 5);
             movies.forEach(movie => {
                 const movieCard = createMovieCard(movie);
@@ -159,6 +164,7 @@ function getMovieDetails(movie_id) {
     $.ajax(settings).done(function(response) {
         search_result.html("");
         search_inp.val("");
+        backdrop_movie_poster.html("");
         backdrop_movie_genre.html("");
         backdrop_movie_cast.html("");
         backdrop_movie_director.html("");
@@ -166,20 +172,7 @@ function getMovieDetails(movie_id) {
         backdrop_movie_overview.html("");
         backdrop_movie_rating.html("");
         loadBackdropImage(response);
-        response.genres.forEach(genre => {
-            backdrop_movie_genre.append("<li>" + genre.name + "</li>");
-        });
-        backdrop_movie_name.append(response.title);
-        response.credits.crew.forEach(crew => {
-            if (crew.job == "Director") {
-                backdrop_movie_director.append("<li>" + crew.name + "</li>");
-            }
-        });
-        response.credits.cast.slice(0, 5).forEach(cast => {
-            backdrop_movie_cast.append("<li>" + cast.name + "</li>");
-        });
-        backdrop_movie_overview.append(response.overview);
-        backdrop_movie_rating.append(response.vote_average);
+        loadContent(response);
         $("#detail").css("display", "block");
     });
 }
@@ -190,6 +183,14 @@ function showSpinner() {
 
 function hideSpinner() {
     $(".spinner-container").css("display", "none");
+}
+
+function showSearchSpinner() {
+    $(".search-result__spinner-container").css("display", "flex");
+}
+
+function hideSearchSpinner() {
+    $(".search-result__spinner-container").css("display", "none");
 }
 
 function loadBackdropImage(response) {
@@ -212,11 +213,45 @@ function loadBackdropImage(response) {
             );
             anime({
                 targets: ".backdrop-container",
-                opacity: 1,
+                opacity: [0, 1],
                 scale: [1.1, 1],
                 duration: 400,
                 easing: "easeOutQuad",
                 begin: hideSpinner()
             });
         });
+}
+
+function loadContent(response) {
+    backdrop_movie_poster.append(
+        "<img src=" +
+            CONFIG.images.secure_base_url +
+            CONFIG.images.poster_sizes[1] +
+            response.poster_path +
+            " alt=" +
+            response.title +
+            " />"
+    );
+    response.genres.forEach(genre => {
+        backdrop_movie_genre.append("<li>" + genre.name + "</li>");
+    });
+    backdrop_movie_name.append(response.title);
+    response.credits.crew.forEach(crew => {
+        if (crew.job == "Director") {
+            backdrop_movie_director.append("<li>" + crew.name + "</li>");
+        }
+    });
+    response.credits.cast.slice(0, 5).forEach(cast => {
+        backdrop_movie_cast.append("<li>" + cast.name + "</li>");
+    });
+    backdrop_movie_overview.append(response.overview);
+    backdrop_movie_rating.append(response.vote_average);
+    anime({
+        targets: ".backdrop-movie",
+        opacity: [0, 1],
+        translateY: ["10%", "0%"],
+        duration: 400,
+        easing: "easeOutQuad",
+        begin: hideSpinner()
+    });
 }

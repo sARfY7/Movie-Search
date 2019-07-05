@@ -23,7 +23,14 @@
                         onkeyup="getMovies(this)"
                     />
                     <!-- <button class="btn btn__rounded">Search</button> -->
-                    <div class="search-result"></div>
+                    <div class="search-result">
+                        <div class="search-result__spinner-container">
+                            <svg class="spinner">
+                                <circle cx="20" cy="20" r="18"></circle>
+                            </svg>
+                        </div>
+                        <div class="results"></div>
+                    </div>
                 </div>
             </div>
 
@@ -36,38 +43,43 @@
                     </div>
                     <div class="backdrop-movie">
                         <div class="backdrop-movie__col1">
-                            <div class="backdrop-movie__genre">
-                                <ul>
-                                    <li>Action</li>
-                                    <li>Adventure</li>
-                                    <li>Sci Fi</li>
-                                </ul>
+                            <div class="backdrop-movie__inner-col1">
+                                <div class="backdrop-movie__poster"></div>
                             </div>
-                            <div class="backdrop-movie__name">
-                                Avengers: Endgame
-                            </div>
-                            <div class="backdrop-movie__director">
-                                Directors:
-                                <ul>
-                                    <li>Anthony Russo</li>
-                                    <li>Joe Russo</li>
-                                </ul>
-                            </div>
-                            <div class="backdrop-movie__cast">
-                                Staring:
-                                <ul>
-                                    <li>Chris Evans</li>
-                                    <li>Chris Hemsworth</li>
-                                    <li>Robert Downey Jr</li>
-                                    <li>Scarlett Johannson</li>
-                                </ul>
-                            </div>
-                            <div class="backdrop-movie__overview">
-                                Lorem ipsum dolor sit amet consectetur
-                                adipisicing elit. Est cumque veniam
-                                reprehenderit reiciendis? Necessitatibus
-                                officiis, laboriosam architecto deleniti facere
-                                aut.
+                            <div class="backdrop-movie__inner-col2">
+                                <div class="backdrop-movie__genre">
+                                    <ul>
+                                        <li>Action</li>
+                                        <li>Adventure</li>
+                                        <li>Sci Fi</li>
+                                    </ul>
+                                </div>
+                                <div class="backdrop-movie__name">
+                                    Avengers: Endgame
+                                </div>
+                                <div class="backdrop-movie__director">
+                                    Directors:
+                                    <ul>
+                                        <li>Anthony Russo</li>
+                                        <li>Joe Russo</li>
+                                    </ul>
+                                </div>
+                                <div class="backdrop-movie__cast">
+                                    Staring:
+                                    <ul>
+                                        <li>Chris Evans</li>
+                                        <li>Chris Hemsworth</li>
+                                        <li>Robert Downey Jr</li>
+                                        <li>Scarlett Johannson</li>
+                                    </ul>
+                                </div>
+                                <div class="backdrop-movie__overview">
+                                    Lorem ipsum dolor sit amet consectetur
+                                    adipisicing elit. Est cumque veniam
+                                    reprehenderit reiciendis? Necessitatibus
+                                    officiis, laboriosam architecto deleniti
+                                    facere aut.
+                                </div>
                             </div>
                         </div>
                         <div class="backdrop-movie__col2">
