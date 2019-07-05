@@ -249,6 +249,44 @@ input {
     display: flex;
     justify-content: space-between;
 
+    ul {
+        display: inline;
+
+        li {
+            position: relative;
+            list-style: none;
+            display: inline;
+            letter-spacing: 0.2rem;
+            // text-transform: uppercase;
+            font-size: 1.4rem;
+            font-weight: 300;
+            padding: 0 0.5rem;
+
+            &:first-child {
+                margin-left: 0;
+                padding-left: 0rem;
+                padding-right: 0.5rem;
+            }
+
+            &:last-child {
+                // margin-left: 0.5rem;
+                padding-left: 0.5rem;
+            }
+
+            &:not(:last-child)::after {
+                content: "";
+                position: absolute;
+                width: 0.5rem;
+                height: 0.5rem;
+                background-color: #fff;
+                border-radius: 50%;
+                transform: translateY(-50%);
+                top: 50%;
+                left: 100%;
+            }
+        }
+    }
+
     &__col1 {
         display: flex;
         flex-direction: column;

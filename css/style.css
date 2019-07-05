@@ -272,6 +272,43 @@ input:focus {
           justify-content: space-between;
 }
 
+.backdrop-movie ul {
+  display: inline;
+}
+
+.backdrop-movie ul li {
+  position: relative;
+  list-style: none;
+  display: inline;
+  letter-spacing: 0.2rem;
+  font-size: 1.4rem;
+  font-weight: 300;
+  padding: 0 0.5rem;
+}
+
+.backdrop-movie ul li:first-child {
+  margin-left: 0;
+  padding-left: 0rem;
+  padding-right: 0.5rem;
+}
+
+.backdrop-movie ul li:last-child {
+  padding-left: 0.5rem;
+}
+
+.backdrop-movie ul li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: #fff;
+  border-radius: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  top: 50%;
+  left: 100%;
+}
+
 .backdrop-movie__col1 {
   display: -webkit-box;
   display: -ms-flexbox;
