@@ -14,11 +14,37 @@ $(function() {
     search_bar = $(".search-bar");
     search_result = $(".search-result");
 
+    backdrop_container = $(".backdrop-container");
+    backdrop_overlay = $(".backdrop-overlay");
+    backdrop_movie_genre = $(".backdrop-movie__genre ul");
+    backdrop_movie_director = $(".backdrop-movie__director ul");
+    backdrop_movie_cast = $(".backdrop-movie__cast ul");
+    backdrop_movie_name = $(".backdrop-movie__name");
+    backdrop_movie_overview = $(".backdrop-movie__overview");
+    backdrop_movie_rating = $(".backdrop-movie__rating");
+    go_back = $(".go-back");
+
     search_inp.on("focusin", function() {
         search_bar.addClass("in-focus");
     });
     search_inp.on("focusout", function() {
         search_bar.removeClass("in-focus");
+    });
+
+    go_back.on("click", function() {
+        search_inp.focus();
+        backdrop_container.css("background-image", "url()");
+        backdrop_movie_genre.html("");
+        backdrop_movie_cast.html("");
+        backdrop_movie_director.html("");
+        backdrop_movie_name.html("");
+        backdrop_movie_overview.html("");
+        backdrop_movie_rating.html("");
+        $("#detail").css("display", "none");
+    });
+
+    $(window).on("load", function() {
+        search_inp.focus();
     });
 
     const settings = {
@@ -41,6 +67,7 @@ function getMovies(element) {
         return;
     }
 
+    search_result.html("");
     let inpValBeforeSend;
     const settings = {
         async: true,
@@ -57,7 +84,6 @@ function getMovies(element) {
     $.ajax(settings).done(function(response) {
         const currentInpVal = element.value;
         if (currentInpVal == inpValBeforeSend) {
-            search_result.html("");
             const movies = response.results.slice(0, 5);
             movies.forEach(movie => {
                 const movieCard = createMovieCard(movie);
@@ -68,10 +94,10 @@ function getMovies(element) {
 }
 
 function createMovieCard(movie) {
-    const a = $("<a>", {
-        href: MOVIEURL + movie.id + "?api_key=" + APIKEY + "&language=en-US"
+    const search_result_card = $("<div>", {
+        class: "search-result-card",
+        onclick: "getMovieDetails(" + movie.id + ")"
     });
-    const search_result_card = $("<div>", { class: "search-result-card" });
     const search_result_card_poster = $(
         "<div class='search-result-card__poster'></div>"
     );
@@ -111,6 +137,86 @@ function createMovieCard(movie) {
     search_result_card_content.append(search_result_card_rating);
     search_result_card.append(search_result_card_poster);
     search_result_card.append(search_result_card_content);
-    a.append(search_result_card);
-    return a;
+    return search_result_card;
+}
+
+function getMovieDetails(movie_id) {
+    showSpinner();
+    const settings = {
+        async: true,
+        crossDomain: true,
+        url:
+            MOVIEURL +
+            movie_id +
+            "?api_key=" +
+            APIKEY +
+            "&language=en-US&append_to_response=credits",
+        method: "GET",
+        headers: {},
+        data: "{}"
+    };
+
+    $.ajax(settings).done(function(response) {
+        search_result.html("");
+        search_inp.val("");
+        backdrop_movie_genre.html("");
+        backdrop_movie_cast.html("");
+        backdrop_movie_director.html("");
+        backdrop_movie_name.html("");
+        backdrop_movie_overview.html("");
+        backdrop_movie_rating.html("");
+        loadBackdropImage(response);
+        response.genres.forEach(genre => {
+            backdrop_movie_genre.append("<li>" + genre.name + "</li>");
+        });
+        backdrop_movie_name.append(response.title);
+        response.credits.crew.forEach(crew => {
+            if (crew.job == "Director") {
+                backdrop_movie_director.append("<li>" + crew.name + "</li>");
+            }
+        });
+        response.credits.cast.slice(0, 5).forEach(cast => {
+            backdrop_movie_cast.append("<li>" + cast.name + "</li>");
+        });
+        backdrop_movie_overview.append(response.overview);
+        backdrop_movie_rating.append(response.vote_average);
+        $("#detail").css("display", "block");
+    });
+}
+
+function showSpinner() {
+    $(".spinner-container").css("display", "flex");
+}
+
+function hideSpinner() {
+    $(".spinner-container").css("display", "none");
+}
+
+function loadBackdropImage(response) {
+    $("<img/>")
+        .attr(
+            "src",
+            CONFIG.images.secure_base_url +
+                CONFIG.images.backdrop_sizes[2] +
+                response.backdrop_path
+        )
+        .on("load", function() {
+            $(this).remove();
+            backdrop_container.css(
+                "background-image",
+                "url(" +
+                    CONFIG.images.secure_base_url +
+                    CONFIG.images.backdrop_sizes[2] +
+                    response.backdrop_path +
+                    ")"
+            );
+            anime({
+                targets: ".backdrop-container",
+                opacity: 1,
+                scale: [1.1, 1],
+                duration: 400,
+                easing: "easeOutQuad",
+                begin: hideSpinner()
+            });
+        });
 }

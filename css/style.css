@@ -33,6 +33,42 @@
   font-style: normal;
 }
 
+@-webkit-keyframes spinner {
+  0% {
+    stroke-dashoffset: 26.4;
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  50% {
+    stroke-dashoffset: 125.6;
+    -webkit-transform: rotate(720deg);
+            transform: rotate(720deg);
+  }
+  100% {
+    stroke-dashoffset: 26.4;
+    -webkit-transform: rotate(1080deg);
+            transform: rotate(1080deg);
+  }
+}
+
+@keyframes spinner {
+  0% {
+    stroke-dashoffset: 26.4;
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  50% {
+    stroke-dashoffset: 125.6;
+    -webkit-transform: rotate(720deg);
+            transform: rotate(720deg);
+  }
+  100% {
+    stroke-dashoffset: 26.4;
+    -webkit-transform: rotate(1080deg);
+            transform: rotate(1080deg);
+  }
+}
+
 *,
 *::after,
 *::before {
@@ -119,8 +155,9 @@ input:focus {
   width: 40rem;
   min-width: 20rem;
   height: 5rem;
-  -webkit-transition: background 0.4s;
-  transition: background 0.4s;
+  -webkit-transition: background 0.2s, border-color 0.2s;
+  transition: background 0.2s, border-color 0.2s;
+  border: 0.05rem solid rgba(0, 0, 0, 0);
 }
 
 .search-bar .btn {
@@ -135,6 +172,7 @@ input:focus {
 
 .in-focus {
   background: rgba(228, 228, 228, 0.8);
+  border: 0.05rem solid black;
 }
 
 .search-icon {
@@ -231,15 +269,17 @@ input:focus {
   bottom: 0;
   left: 0;
   right: 0;
-  overflow-x: hidden;
+  overflow: hidden;
   background-color: #fff;
 }
 
 .backdrop-container {
   width: 100%;
   height: 100vh;
-  background: url("../img/backdrop.jpg") no-repeat center;
+  background-repeat: no-repeat;
+  background-position: center top;
   background-size: cover;
+  opacity: 0;
 }
 
 .backdrop-overlay {
@@ -285,6 +325,7 @@ input:focus {
   font-size: 1.4rem;
   font-weight: 300;
   padding: 0 0.5rem;
+  margin-left: 0.5rem;
 }
 
 .backdrop-movie ul li:first-child {
@@ -294,6 +335,7 @@ input:focus {
 }
 
 .backdrop-movie ul li:last-child {
+  margin-left: 0.5rem;
   padding-left: 0.5rem;
 }
 
@@ -374,6 +416,7 @@ input:focus {
   max-width: 60rem;
   font-size: 1.4rem;
   line-height: 1.6;
+  letter-spacing: 0.1rem;
 }
 
 .backdrop-movie__rating {
@@ -381,4 +424,45 @@ input:focus {
   font-weight: 800;
   line-height: 78%;
   margin-right: 2rem;
+}
+
+.go-back:hover {
+  cursor: pointer;
+}
+
+#detail {
+  display: none;
+}
+
+.spinner-container {
+  position: absolute;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  display: none;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: #fff;
+}
+
+svg.spinner {
+  width: 4rem;
+  height: 4rem;
+  x: 0;
+  y: 0;
+  viewbox: 0 0 4rem 4rem;
+}
+
+svg.spinner circle {
+  fill: none;
+  stroke: #000;
+  stroke-dasharray: 125.6;
+  -webkit-transform-origin: 20px 20px 0;
+          transform-origin: 20px 20px 0;
+  -webkit-animation: spinner 2s linear infinite;
+          animation: spinner 2s linear infinite;
 }

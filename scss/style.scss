@@ -35,6 +35,22 @@
 }
 
 // Animations
+@keyframes spinner {
+    0% {
+        stroke-dashoffset: (0.66 * 40);
+        transform: rotate(0deg);
+    }
+
+    50% {
+        stroke-dashoffset: (3.14 * 40);
+        transform: rotate(720deg);
+    }
+
+    100% {
+        stroke-dashoffset: (0.66 * 40);
+        transform: rotate(1080deg);
+    }
+}
 
 // Normalize
 *,
@@ -115,8 +131,8 @@ input {
     width: 40rem;
     min-width: 20rem;
     height: 5rem;
-    transition: background 0.4s;
-    // border: 0.05rem solid #fff;
+    transition: background 0.2s, border-color 0.2s;
+    border: 0.05rem solid rgba($color: #000, $alpha: 0);
 
     .btn {
         background: #fff;
@@ -131,6 +147,7 @@ input {
 
 .in-focus {
     background: rgba($color: #e4e4e4, $alpha: 0.8);
+    border: 0.05rem solid rgba($color: #000, $alpha: 1);
 }
 
 .search-icon {
@@ -217,15 +234,18 @@ input {
     bottom: 0;
     left: 0;
     right: 0;
-    overflow-x: hidden;
+    overflow: hidden;
     background-color: #fff;
 }
 
 .backdrop-container {
     width: 100%;
     height: 100vh;
-    background: url("../img/backdrop.jpg") no-repeat center;
+    // background: url("../img/backdrop.jpg");
+    background-repeat: no-repeat;
+    background-position: center top;
     background-size: cover;
+    opacity: 0;
 }
 
 .backdrop-overlay {
@@ -262,6 +282,7 @@ input {
             font-size: 1.4rem;
             font-weight: 300;
             padding: 0 0.5rem;
+            margin-left: 0.5rem;
 
             &:first-child {
                 margin-left: 0;
@@ -270,7 +291,7 @@ input {
             }
 
             &:last-child {
-                // margin-left: 0.5rem;
+                margin-left: 0.5rem;
                 padding-left: 0.5rem;
             }
 
@@ -345,6 +366,7 @@ input {
         max-width: 60rem;
         font-size: 1.4rem;
         line-height: 1.6;
+        letter-spacing: 0.1rem;
     }
 
     &__rating {
@@ -352,5 +374,43 @@ input {
         font-weight: 800;
         line-height: 78%;
         margin-right: 2rem;
+    }
+}
+
+.go-back {
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+#detail {
+    display: none;
+}
+
+// Spinner
+.spinner-container {
+    position: absolute;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+}
+
+svg.spinner {
+    width: 4rem;
+    height: 4rem;
+    x: 0;
+    y: 0;
+    viewbox: 0 0 4rem 4rem;
+
+    circle {
+        fill: none;
+        stroke: #000;
+        stroke-dasharray: (3.14 * 40);
+        transform-origin: (0.5px * 40) (0.5px * 40) 0;
+        animation: spinner 2s linear infinite;
     }
 }
