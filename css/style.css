@@ -401,6 +401,7 @@ input:focus {
   font-size: 1.4rem;
   font-weight: 300;
   padding: 0 0.5rem;
+  word-wrap: break-word;
 }
 
 .backdrop-movie__genre li:first-child {
@@ -430,6 +431,8 @@ input:focus {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
 }
 
 .backdrop-movie__name {
@@ -496,4 +499,42 @@ svg.spinner circle {
           transform-origin: 20px 20px 0;
   -webkit-animation: spinner 2s linear infinite;
           animation: spinner 2s linear infinite;
+}
+
+@media screen and (max-width: 45rem) {
+  html {
+    font-size: 50%;
+  }
+  .wrapper {
+    padding: 2rem;
+    width: 100vmin;
+    height: 100vmax;
+  }
+  .backdrop-movie__col1 {
+    padding: inherit;
+  }
+  .backdrop-movie__inner-col2 {
+    padding: inherit;
+  }
+  .backdrop-movie__col2 {
+    -webkit-box-pack: end;
+        -ms-flex-pack: end;
+            justify-content: flex-end;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  .backdrop-movie__name-year {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .backdrop-movie__name {
+    line-height: 100%;
+    font-size: 4rem;
+  }
+  .backdrop-movie__overview {
+    font-size: 1.4rem;
+  }
 }

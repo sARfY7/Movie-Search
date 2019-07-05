@@ -344,6 +344,7 @@ input {
             font-size: 1.4rem;
             font-weight: 300;
             padding: 0 0.5rem;
+            word-wrap: break-word;
 
             &:first-child {
                 margin-left: 0;
@@ -372,6 +373,7 @@ input {
 
     &__name-year {
         display: flex;
+        flex-wrap: nowrap;
     }
 
     &__name {
@@ -435,5 +437,50 @@ svg.spinner {
         stroke-dasharray: (3.14 * 40);
         transform-origin: (0.5px * 40) (0.5px * 40) 0;
         animation: spinner 2s linear infinite;
+    }
+}
+
+// Responsive
+@media screen and (max-width: 45rem) {
+    html {
+        font-size: 50%;
+    }
+
+    .wrapper {
+        padding: 2rem;
+        width: 100vmin;
+        height: 100vmax;
+    }
+
+    .backdrop-movie {
+        // flex-direction: column-reverse;
+
+        &__col1 {
+            padding: inherit;
+        }
+
+        &__inner-col2 {
+            padding: inherit;
+        }
+
+        &__col2 {
+            justify-content: flex-end;
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+
+        &__name-year {
+            flex-direction: column;
+        }
+
+        &__name {
+            line-height: 100%;
+            font-size: 4rem;
+        }
+
+        &__overview {
+            font-size: 1.4rem;
+        }
     }
 }
