@@ -22,6 +22,7 @@ $(function() {
     backdrop_movie_director = $(".backdrop-movie__director ul");
     backdrop_movie_cast = $(".backdrop-movie__cast ul");
     backdrop_movie_name = $(".backdrop-movie__name");
+    backdrop_movie_year = $(".backdrop-movie__year");
     backdrop_movie_overview = $(".backdrop-movie__overview");
     backdrop_movie_rating = $(".backdrop-movie__rating");
     go_back = $(".go-back");
@@ -35,15 +36,7 @@ $(function() {
 
     go_back.on("click", function() {
         search_inp.focus();
-        backdrop_container.css("background-image", "url()");
-        backdrop_movie_poster.html("");
-        backdrop_movie_genre.html("");
-        backdrop_movie_cast.html("");
-        backdrop_movie_director.html("");
-        backdrop_movie_name.html("");
-        backdrop_movie_overview.html("");
-        backdrop_movie_rating.html("");
-        $("#detail").css("display", "none");
+        goBackToSearch();
     });
 
     $(window).on("load", function() {
@@ -169,6 +162,7 @@ function getMovieDetails(movie_id) {
         backdrop_movie_cast.html("");
         backdrop_movie_director.html("");
         backdrop_movie_name.html("");
+        backdrop_movie_year.html("");
         backdrop_movie_overview.html("");
         backdrop_movie_rating.html("");
         loadBackdropImage(response);
@@ -236,6 +230,7 @@ function loadContent(response) {
         backdrop_movie_genre.append("<li>" + genre.name + "</li>");
     });
     backdrop_movie_name.append(response.title);
+    backdrop_movie_year.append(response.release_date.split("-")[0]);
     response.credits.crew.forEach(crew => {
         if (crew.job == "Director") {
             backdrop_movie_director.append("<li>" + crew.name + "</li>");
@@ -252,6 +247,31 @@ function loadContent(response) {
         translateY: ["10%", "0%"],
         duration: 400,
         easing: "easeOutQuad",
-        begin: hideSpinner()
+        begin: function(anim) {
+            hideSpinner();
+            $("#detail").css("transform", "scale(1)");
+            $("#detail").css("opacity", 1);
+        }
+    });
+}
+
+function goBackToSearch() {
+    anime({
+        targets: "#detail",
+        opacity: [1, 0],
+        scale: ["1", "0.9"],
+        duration: 400,
+        easing: "easeOutQuad",
+        complete: function(anim) {
+            backdrop_container.css("background-image", "url()");
+            backdrop_movie_poster.html("");
+            backdrop_movie_genre.html("");
+            backdrop_movie_cast.html("");
+            backdrop_movie_director.html("");
+            backdrop_movie_name.html("");
+            backdrop_movie_overview.html("");
+            backdrop_movie_rating.html("");
+            $("#detail").css("display", "none");
+        }
     });
 }
