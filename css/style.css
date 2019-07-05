@@ -263,7 +263,52 @@ input:focus {
   background: linear-gradient(to top, black 0%, rgba(255, 255, 255, 0) 80%);
 }
 
-.movie-name {
+.backdrop-movie {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.backdrop-movie__genre li {
+  position: relative;
+  list-style: none;
+  display: inline;
+  letter-spacing: 0.2rem;
+  font-size: 1.4rem;
+  font-weight: 300;
+  padding: 0 0.5rem;
+}
+
+.backdrop-movie__genre li:first-child {
+  margin-left: 0;
+  padding-left: 0rem;
+  padding-right: 0.5rem;
+}
+
+.backdrop-movie__genre li:last-child {
+  padding-left: 0.5rem;
+}
+
+.backdrop-movie__genre li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: #fff;
+  border-radius: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  top: 50%;
+  left: 100%;
+}
+
+.backdrop-movie__name {
   font-size: 8rem;
   font-weight: 800;
 }
@@ -321,20 +366,4 @@ input:focus {
 
 .movie-overview {
   line-height: 1.6;
-}
-
-.movie-tagline {
-  position: relative;
-  display: inline-block;
-  margin-bottom: 1rem;
-}
-
-.movie-tagline::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  right: 0;
-  left: 0;
-  height: 50%;
-  background-color: rgba(0, 0, 0, 0.122);
 }
